@@ -1,32 +1,40 @@
-# Full-Stack-Enterprise-Cyber-Range
-Cybersecurity testing and research lab
+# 🏢 Full-Stack Enterprise Cyber Range
 
-# Enterprise Virtualized Network Perimeter & Cyber Range
+**Cybersecurity testing and research lab**
 
-## 📌 Project Overview
-This project documents the design, configuration, and deployment of a segmented enterprise network environment using **pfSense** as the primary perimeter firewall and router. The architecture was built entirely within Oracle VirtualBox to simulate a realistic corporate network, complete with isolated zones for Active Directory, Malware Analysis, Incident Response, and Penetration Testing.
+## 📌 Executive Summary
+This repository documents the architecture, deployment, and configuration of a fully virtualized, enterprise-grade Security Operations Center (SOC) and Cyber Range. Built entirely within Oracle VirtualBox, this environment simulates a realistic corporate network with strict segmentation, a dedicated threat hunting SIEM, a vulnerable Active Directory forest, and an air-gapped malware analysis sandbox. 
 
-* **Credit/Inspiration:** [Insert Link to the writeup you followed]
+The primary objective of this project is to provide a safe, segmented environment for advanced penetration testing, digital forensics, incident response (DFIR), and perimeter defense research.
 
-## 🛠️ Core Technologies Used
-* **Hypervisor:** Oracle VirtualBox
-* **Firewall/Router:** pfSense (FreeBSD)
+## 🏗️ Network Architecture & Segmentation
+To adhere to Zero Trust principles, the network is routed through a central **pfSense** firewall and segmented into distinct Virtual LANs (VLANs), ensuring strict traffic control between trusted and untrusted zones.
+
+* **WAN (`vtnet0`):** External internet connection (NAT).
+* **LAN (`vtnet1`):** Primary management network.
+* **CYBER_RANGE (`vtnet2`):** Offensive security subnet featuring Kali Linux.
+* **AD_LAB (`vtnet3`):** Simulated corporate environment with Windows Server Active Directory.
+* **ISOLATED (`vtnet4`):** Air-gapped sandbox for detonation and malware analysis (FlareVM, REMnux).
+* **SECURITY (`vtnet5`):** Dedicated defensive zone for security monitoring and SIEM deployment (Splunk).
+
+## 🛠️ Core Technology Stack
+* **Infrastructure & Routing:** Oracle VirtualBox, pfSense (FreeBSD)
 * **Offensive Security:** Kali Linux
-* **Defensive/Analysis:** Splunk, FlareVM, REMnux, Windows Server, Tsurugi Linux
+* **Defensive Operations (Blue Team):** Splunk (SIEM)
+* **Digital Forensics & Incident Response (DFIR):** Tsurugi Linux
+* **Malware Analysis:** FlareVM (Windows), REMnux (Linux)
+* **Enterprise Environment:** Windows Server 2022/2019, Active Directory
 
-## 🗺️ Network Topology & IP Addressing
-The environment is segmented into six distinct interfaces managed by the pfSense firewall. Each zone operates on its own dedicated subnet to ensure strict traffic control and isolation, preventing unauthorized lateral movement.
+## 📂 Project Documentation & Build Phases
+The deployment of this cyber range is documented in phases. Click on any phase below to view the detailed configuration guides, firewall rulesets, and deployment steps.
 
-| Interface | Zone Name | IP Subnet | Gateway (pfSense) | Purpose |
-| :--- | :--- | :--- | :--- | :--- |
-| **WAN** (`vtnet0`) | External | DHCP | N/A | Simulated internet connection (NAT to Host). |
-| **LAN** (`vtnet1`) | Management | `10.0.0.0/24` | `10.0.0.1` | Firewall administration and core management. |
-| **CYBER_RANGE** (`vtnet2`) | Offensive | `10.0.1.0/24` | `10.0.1.1` | Penetration testing tools and attack origination (Kali Linux). |
-| **AD_LAB** (`vtnet3`) | Corporate | `10.0.2.0/24` | `10.0.2.1` | Windows Server Active Directory forest and domain-joined endpoints. |
-| **ISOLATED** (`vtnet4`) | Sandbox | `10.0.3.0/24` | `10.0.3.1` | Air-gapped malware detonation and reverse engineering (FlareVM, REMnux). |
-| **SECURITY** (`vtnet5`) | SIEM / DFIR | `10.0.4.0/24` | `10.0.4.1` | Log ingestion, monitoring, and forensics (Splunk, Tsurugi). |
+* 📝 **Phase 0 & 1:** [Hypervisor Setup & Network Topology](#)
+* 🛡️ **Phase 2 & 4:** [pfSense Firewall & Egress Configuration](#)
+* ⚔️ **Phase 3 & 5:** [Kali Linux & Cyber Range Deployment](#)
+* 🏢 **Phase 6 & 7:** [Active Directory Forest Build](#)
+* 🦠 **Phase 8 & 11:** [Malware Analysis Sandbox & Secure File Transfer](#)
+* 🔎 **Phase 9:** [Tsurugi Linux DFIR Setup](#)
+* 📊 **Phase 10:** [Splunk SIEM Deployment & Telemetry](#)
 
-## 🔒 Access Control & Firewall Methodology
-By default, pfSense implicitly denies all inbound and outbound traffic. To construct a functional but secure environment, custom firewall rules were engineered for each interface following a **Zero Trust** model.
-
-*(Detailed rulesets for Egress, Ingress, and Inter-VLAN routing will be documented below).*
+---
+*Disclaimer: This environment is built strictly for educational purposes, research, and defensive security training.*
