@@ -28,13 +28,15 @@ To adhere to Zero Trust principles, the network is routed through a central **pf
 ## 📂 Project Documentation & Build Phases
 The deployment of this cyber range is documented in phases. Click on any phase below to view the detailed configuration guides, firewall rulesets, and deployment steps.
 
-* 📝 **Phase 0 & 1:** [Hypervisor Setup & Network Topology](#)
-* 🛡️ **Phase 2 & 4:** [pfSense Firewall & Egress Configuration](#)
-* ⚔️ **Phase 3 & 5:** [Kali Linux & Cyber Range Deployment](#)
-* 🏢 **Phase 6 & 7:** [Active Directory Forest Build](#)
-* 🦠 **Phase 8 & 11:** [Malware Analysis Sandbox & Secure File Transfer](#)
-* 🔎 **Phase 9:** [Tsurugi Linux DFIR Setup](#)
-* 📊 **Phase 10:** [Splunk SIEM Deployment & Telemetry](#)
+* 📝 **Phase 1:** [Network Topology & Hypervisor Setup](docs/Phase-1-Network-Topology.md)
+* 🛡️ **Phase 2:** [pfSense Firewall Installation](docs/Phase-2-pfSense-Setup.md)
+* ⚔️ **Phase 3:** [Offensive Security Zone (Kali Linux)](docs/Phase-3-Kali-Linux-Setup.md)
+* 🧱 **Phase 4:** [Egress Filtering & Network Segmentation](docs/Phase-4-Firewall-Configuration.md)
+* 🎯 **Phase 5:** [Cyber Range Setup (Vulnerable Targets)](docs/Phase-5-Cyber-Range-Setup.md)
+* 🏢 **Phase 6 & 7:** [Active Directory Forest Deployment](docs/Phase-6-Active-Directory-Deployment.md)
+* 🦠 **Phase 8 & 11:** [Malware Analysis Sandbox & Secure Detonation](docs/Phase-8-Malware-Sandbox.md)
+* 🔎 **Phase 9:** [Digital Forensics & Incident Response (DFIR)](docs/Phase-9-DFIR-Environment.md)
+* 📊 **Phase 10:** [Splunk SIEM Deployment & Telemetry](docs/Phase-10-SIEM-Deployment.md)
 
 ---
 
