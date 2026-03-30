@@ -41,7 +41,6 @@ The deployment of this cyber range is documented in phases. Click on any phase b
 
 ---
 
-mermaid
 graph TD
     subgraph External_Network
         WAN[WAN / Internet]
