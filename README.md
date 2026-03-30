@@ -41,6 +41,7 @@ The deployment of this cyber range is documented in phases. Click on any phase b
 
 ---
 
+mermaid
 graph TD
 
 subgraph WAN_Zone [External WAN / Internet]
@@ -67,7 +68,6 @@ WAN <--> FW
 FW <--> AD_Zone
 FW -.-> |Blocked| Malware_Zone
 FW <--> LAN
-
 
 
 
