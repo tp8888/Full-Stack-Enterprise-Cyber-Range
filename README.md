@@ -41,37 +41,37 @@ The deployment of this cyber range is documented in phases. Click on any phase b
 
 ---
 
-🗺️ Lab Topology Diagram
-
-Unable to render rich display
-
-Parse error on line 30: ...it & Inspiration:** This architecture is -----------------------^ Expecting 'SEMI', 'NEWLINE', 'EOF', 'AMP', 'START_LINK', 'LINK', 'LINK_ID', got 'NODE_STRING'
-
-For more information, see https://docs.github.com/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams#creating-mermaid-diagrams
-
-```mermaid
 graph TD 
-subgraph External WAN[WAN / Internet] 
-end
+    %% External Network
+    subgraph External_WAN [WAN / Internet]
+        WAN[Internet Gateway]
+    end
 
-subgraph pfSense[pfSense Firewall]
-    FW[Routing & Filtering]
-end
+    %% Firewall
+    subgraph pfSense_Zone [pfSense Firewall]
+        FW[Routing & Filtering]
+    end
 
-subgraph AD_Zone [AD_LAB - 10.80.80.1/24]
-    DC[Windows Server 2019 DC]
-    W10_1[Win10 Enterprise VM1]
-    W10_2[Win10 Enterprise VM2]
-end
+    %% Active Directory Lab
+    subgraph AD_Zone [AD_LAB - 10.80.80.1/24]
+        DC[Windows Server 2019 DC]
+        W10_1[Win10 Enterprise VM1]
+        W10_2[Win10 Enterprise VM2]
+    end
 
-subgraph Malware_Zone [CYBER_RANGE - 10.0.2.1/24]
-    DET[Malware Detonation VM]
-end
+    %% Malware Isolation
+    subgraph Malware_Zone [CYBER_RANGE - 10.0.2.1/24]
+        DET[Malware Detonation VM]
+    end
 
-WAN <--> FW
-FW <--> AD_Zone
-FW "-.->" |Blocked| Malware_Zone
-FW <--> LAN
+    %% Internal LAN
+    LAN[Internal LAN]
+
+    %% Connections
+    WAN <--> FW
+    FW <--> AD_Zone
+    FW -.-> |Blocked| Malware_Zone
+    FW <--> LAN
 
 
 
