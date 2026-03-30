@@ -40,6 +40,45 @@ The deployment of this cyber range is documented in phases. Click on any phase b
 
 ---
 
+## 🗺️ Lab Topology Diagram
+
+The following diagram illustrates the logical separation of the `AD_LAB`, `MALWARE_SANDBOX`, and `MANAGEMENT` zones, all orchestrated by the pfSense firewall.
+
+```mermaid
+graph TD
+    subgraph Internet
+        WAN[WAN / Internet]
+    end
+
+    subgraph pfSense_Firewall [pfSense Virtual Appliance]
+        FW[Firewall / Router]
+    end
+
+    subgraph AD_LAB_VLAN [AD_LAB - 10.80.80.1/24]
+        DC[Windows Server 2019 DC]
+        W10_1[Win10 Enterprise VM1]
+        W10_2[Win10 Enterprise VM2]
+    end
+
+    subgraph MALWARE_VLAN [MALWARE_SANDBOX - 10.0.2.1/24]
+        DET[Malware Detonation VM]
+    end
+
+    subgraph MGMT_LAN [MANAGEMENT_LAN - 10.0.1.1/24]
+        KALI[Kali Linux / Analysis Box]
+    end
+
+    %% Connectivity
+    WAN <--> FW
+    FW <--> AD_LAB_VLAN
+    FW -.-> |Blocked| MALWARE_VLAN
+    FW <--> MGMT_LAN
+    
+    %% Internal Relations
+    DC --- W10_1
+    DC --- W10_2
+
+
 > **Credit & Inspiration:** This architecture is built based on the "Building a Virtual Security Home Lab" blueprint designed by [David Varghese](https://david-varghese.medium.com/).
 
 *Disclaimer: This environment is built strictly for educational purposes, research, and defensive security training.*
