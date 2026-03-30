@@ -45,21 +45,30 @@ The deployment of this cyber range is documented in phases. Click on any phase b
 
 ```mermaid
 graph TD
-    WAN((Internet/WAN)) --- pfSense{pfSense Firewall}
-    
-    pfSense --- LAN[Management LAN 10.0.1.0/24]
-    pfSense --- CYBER[Cyber Range 10.0.2.0/24]
-    pfSense --- AD[AD Lab 10.80.80.0/24]
-    pfSense -.-> ISO[Isolated Sandbox]
-
-    subgraph Corporate_Network
-    AD --- DC[Windows Server 2019]
-    AD --- W10[Win10 Workstations]
+    subgraph External_Network
+        WAN[WAN / Internet]
     end
 
-    subgraph Offensive_Zone
-    CYBER --- KALI[Kali Linux]
+    subgraph pfSense_Appliance [pfSense Firewall]
+        FW[Routing & Filtering]
     end
+
+    subgraph AD_LAB_Zone [AD_LAB - 10.80.80.1/24]
+        DC[Windows Server 2019 DC]
+        W10_1[Win10 Enterprise VM1]
+        W10_2[Win10 Enterprise VM2]
+    end
+
+    subgraph CYBER_ZONE [CYBER_RANGE - 10.0.2.1/24]
+        KALI[Kali Linux / Offensive Box]
+    end
+
+    %% Connectivity Logic
+    WAN <--> FW
+    FW <--> AD_LAB_Zone
+    FW <--> CYBER_ZONE
+    FW <--> LAN
+
 
 
 
