@@ -66,6 +66,12 @@ graph TD
     FW <--> AD_Zone
     FW -.-> |Blocked| Malware_Zone
     FW <--> LAN
+    end
+
+
+
+
+
 
 > **Credit & Inspiration:** This architecture is built based on the "Building a Virtual Security Home Lab" blueprint designed by [David Varghese](https://david-varghese.medium.com/).
 
