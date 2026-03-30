@@ -73,7 +73,6 @@ FW <--> LAN
 
 
 
-
  **Credit & Inspiration:** This architecture is built based on the "Building a Virtual Security Home Lab" blueprint designed by [David Varghese](https://david-varghese.medium.com/).
 
 *Disclaimer: This environment is built strictly for educational purposes, research, and
