@@ -41,7 +41,8 @@ The deployment of this cyber range is documented in phases. Click on any phase b
 
 ---
 
-## 🗺️ Lab Topology Diagram
+🗺️ Lab Topology Diagram
+
 ```mermaid
 graph TD
     subgraph External
@@ -66,7 +67,7 @@ graph TD
     FW <--> AD_Zone
     FW -.-> |Blocked| Malware_Zone
     FW <--> LAN
-    end
+
 
 
 
