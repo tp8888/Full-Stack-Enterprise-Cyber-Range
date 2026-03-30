@@ -40,43 +40,47 @@ The deployment of this cyber range is documented in phases. Click on any phase b
 
 ---
 
-## 🗺️ Lab Topology Diagram
+# 🛡️ Phase 5: Perimeter Security & Network Segmentation (pfSense)
 
-The following diagram illustrates the logical separation of the `AD_LAB`, `MALWARE_SANDBOX`, and `MANAGEMENT` zones, all orchestrated by the pfSense firewall.
+## 📌 Objective
+To establish a hardened network perimeter using a **pfSense Virtual Appliance**. This phase ensures that the `AD_LAB` and `CYBER_RANGE` zones are isolated from each other and the internet, with strict egress filtering to prevent unauthorized data exfiltration.
 
+## 🕸️ Network Topology
+The lab is segmented into distinct interfaces to enforce the principle of least privilege:
+
+| Interface | Subnet | Purpose |
+| :--- | :--- | :--- |
+| **WAN** | DHCP (NAT) | External connectivity (Restricted) |
+| **LAN** | `10.0.1.1/24` | Primary management network |
+| **CYBER_RANGE** | `10.0.2.1/24` | Detonation zone for malware analysis |
+| **AD_LAB** | `10.80.80.1/24` | Corporate Forest (`ad.lab`) |
+
+### 🗺️ Lab Topology Diagram
 ```mermaid
 graph TD
-    subgraph Internet
+    subgraph External_Network
         WAN[WAN / Internet]
     end
 
-    subgraph pfSense_Firewall [pfSense Virtual Appliance]
-        FW[Firewall / Router]
+    subgraph pfSense_Appliance [pfSense Firewall]
+        FW[Routing & Filtering]
     end
 
-    subgraph AD_LAB_VLAN [AD_LAB - 10.80.80.1/24]
+    subgraph AD_LAB_Zone [AD_LAB - 10.80.80.1/24]
         DC[Windows Server 2019 DC]
         W10_1[Win10 Enterprise VM1]
         W10_2[Win10 Enterprise VM2]
     end
 
-    subgraph MALWARE_VLAN [MALWARE_SANDBOX - 10.0.2.1/24]
+    subgraph CYBER_ZONE [CYBER_RANGE - 10.0.2.1/24]
         DET[Malware Detonation VM]
     end
 
-    subgraph MGMT_LAN [MANAGEMENT_LAN - 10.0.1.1/24]
-        KALI[Kali Linux / Analysis Box]
-    end
-
-    %% Connectivity
+    %% Connectivity Logic
     WAN <--> FW
-    FW <--> AD_LAB_VLAN
-    FW -.-> |Blocked| MALWARE_VLAN
-    FW <--> MGMT_LAN
-    
-    %% Internal Relations
-    DC --- W10_1
-    DC --- W10_2
+    FW <--> AD_LAB_Zone
+    FW -.-> |Access Blocked| CYBER_ZONE
+    FW <--> LAN
 
 
 > **Credit & Inspiration:** This architecture is built based on the "Building a Virtual Security Home Lab" blueprint designed by [David Varghese](https://david-varghese.medium.com/).
