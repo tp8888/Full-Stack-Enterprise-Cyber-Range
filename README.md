@@ -43,34 +43,29 @@ The deployment of this cyber range is documented in phases. Click on any phase b
 
 ## 🗺️ Lab Topology Diagram
 
-```mermaid
 graph TD
-    subgraph External_Network
+    subgraph External
         WAN[WAN / Internet]
     end
 
-    subgraph pfSense_Appliance [pfSense Firewall]
+    subgraph pfSense[pfSense Firewall]
         FW[Routing & Filtering]
     end
 
-    subgraph AD_LAB_Zone [AD_LAB - 10.80.80.1/24]
+    subgraph AD_Zone [AD_LAB - 10.80.80.1/24]
         DC[Windows Server 2019 DC]
         W10_1[Win10 Enterprise VM1]
         W10_2[Win10 Enterprise VM2]
     end
 
-    subgraph CYBER_ZONE [CYBER_RANGE - 10.0.2.1/24]
-        KALI[Kali Linux / Offensive Box]
+    subgraph Malware_Zone [CYBER_RANGE - 10.0.2.1/24]
+        DET[Malware Detonation VM]
     end
 
-    %% Connectivity Logic
     WAN <--> FW
-    FW <--> AD_LAB_Zone
-    FW <--> CYBER_ZONE
+    FW <--> AD_Zone
+    FW -.-> |Blocked| Malware_Zone
     FW <--> LAN
-
-
-
 
 > **Credit & Inspiration:** This architecture is built based on the "Building a Virtual Security Home Lab" blueprint designed by [David Varghese](https://david-varghese.medium.com/).
 
