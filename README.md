@@ -42,7 +42,7 @@ The deployment of this cyber range is documented in phases. Click on any phase b
 ---
 
 ## 🗺️ Lab Topology Diagram
-
+```mermaid
 graph TD
     subgraph External
         WAN[WAN / Internet]
