@@ -41,34 +41,33 @@ The deployment of this cyber range is documented in phases. Click on any phase b
 
 ---
 
-graph TD 
-    %% 1. Define Subgraphs with valid IDs (no spaces)
-    subgraph WAN_Zone [External WAN / Internet]
-        WAN[Internet Gateway]
-    end
+graph TD
 
-    subgraph FW_Zone [pfSense Firewall]
-        FW[Routing & Filtering]
-    end
+subgraph WAN_Zone [External WAN / Internet]
+    WAN[Internet Gateway]
+end
 
-    subgraph AD_Zone [AD_LAB - 10.80.80.1/24]
-        DC[Windows Server 2019 DC]
-        W10_1[Win10 Enterprise VM1]
-        W10_2[Win10 Enterprise VM2]
-    end
+subgraph FW_Zone [pfSense Firewall]
+    FW[Routing & Filtering]
+end
 
-    subgraph Malware_Zone [CYBER_RANGE - 10.0.2.1/24]
-        DET[Malware Detonation VM]
-    end
+subgraph AD_Zone [AD_LAB - 10.80.80.1/24]
+    DC[Windows Server 2019 DC]
+    W10_1[Win10 Enterprise VM1]
+    W10_2[Win10 Enterprise VM2]
+end
 
-    %% 2. Define the missing LAN node
-    LAN[Internal LAN]
+subgraph Malware_Zone [CYBER_RANGE - 10.0.2.1/24]
+    DET[Malware Detonation VM]
+end
 
-    %% 3. Establish Connections using the specific Node IDs
-    WAN <--> FW
-    FW <--> AD_Zone
-    FW -.-> |Blocked| Malware_Zone
-    FW <--> LAN
+LAN[Internal LAN]
+
+WAN <--> FW
+FW <--> AD_Zone
+FW -.-> |Blocked| Malware_Zone
+FW <--> LAN
+
 
 
 
