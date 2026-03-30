@@ -5,20 +5,40 @@
 ## 📌 Objective
 To establish the foundational hypervisor environment and map out the virtualized network segmentation required for a Zero Trust enterprise architecture.
 
-## ⚙️ Hypervisor Configuration (Oracle VirtualBox)
-The host machine was provisioned with adequate resources to support multiple simultaneous Virtual Machines (VMs). VirtualBox was configured with custom internal networks to act as isolated virtual switches.
+## 🗺️ Lab Topology Diagram
+The following diagram illustrates the logical separation of the lab zones, all orchestrated by the pfSense firewall.
 
-### Virtual Network Assignments
-To ensure strict traffic control, the following isolated networks were created within VirtualBox. All traffic between these zones is forced through the pfSense perimeter firewall.
+```mermaid
+graph TD
+    subgraph External_Network
+        WAN[WAN / Internet]
+    end
 
-| Interface Name | VirtualBox Network Type | pfSense Assignment | Zone Purpose |
-| :--- | :--- | :--- | :--- |
-| **Adapter 1** | NAT | `WAN` (`vtnet0`) | External Internet Access |
-| **Adapter 2** | Internal Network (`LAN`) | `LAN` (`vtnet1`) | Primary Management |
-| **Adapter 3** | Internal Network (`CYBER_RANGE`) | `CYBER_RANGE` (`vtnet2`) | Offensive Operations (Kali) |
-| **Adapter 4** | Internal Network (`AD_LAB`) | `AD_LAB` (`vtnet3`) | Corporate Environment |
-| **Adapter 5** | Internal Network (`ISOLATED`) | `ISOLATED` (`vtnet4`) | Malware Analysis Sandbox |
-| **Adapter 6** | Internal Network (`SECURITY`) | `SECURITY` (`vtnet5`) | Defensive Monitoring (SIEM) |
+    subgraph pfSense_Appliance [pfSense Firewall]
+        FW[Routing & Filtering]
+    end
 
-## 🚀 Next Step
-With the isolated switches created in the hypervisor, the next phase involves installing the pfSense routing engine to bridge and secure these networks.
+    subgraph AD_Zone [AD_LAB - 10.80.80.1/24]
+        DC[Windows Server 2019 DC]
+        W10_1[Win10 Enterprise VM1]
+        W10_2[Win10 Enterprise VM2]
+    end
+
+    subgraph Cyber_Zone [CYBER_RANGE - 10.0.2.1/24]
+        KALI[Kali Linux / Offensive Box]
+    end
+
+    subgraph Malware_Zone [ISOLATED - vtnet4]
+        DET[Malware Analysis Sandbox]
+    end
+
+    subgraph Mgmt_Zone [LAN - 10.0.1.1/24]
+        MGMT[Management Console]
+    end
+
+    %% Connectivity
+    WAN <--> FW
+    FW <--> AD_Zone
+    FW <--> Cyber_Zone
+    FW <--> Mgmt_Zone
+    FW -.-> |Restricted| Malware_Zone
