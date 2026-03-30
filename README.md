@@ -23,7 +23,7 @@ To adhere to Zero Trust principles, the network is routed through a central **pf
 * **Defensive Operations (Blue Team):** Splunk (SIEM)
 * **Digital Forensics & Incident Response (DFIR):** Tsurugi Linux
 * **Malware Analysis:** FlareVM (Windows), REMnux (Linux)
-* **Enterprise Environment:** Windows Server 2022/2019, Active Directory
+* **Enterprise Environment:** Windows Server 2019, Active Directory
 
 ## 📂 Project Documentation & Build Phases
 The deployment of this cyber range is documented in phases. Click on any phase below to view the detailed configuration guides, firewall rulesets, and deployment steps.
@@ -33,29 +33,16 @@ The deployment of this cyber range is documented in phases. Click on any phase b
 * ⚔️ **Phase 3:** [Offensive Security Zone (Kali Linux)](docs/Phase-3-Kali-Linux-Setup.md)
 * 🧱 **Phase 4:** [Egress Filtering & Network Segmentation](docs/Phase-4-Firewall-Configuration.md)
 * 🎯 **Phase 5:** [Cyber Range Setup (Vulnerable Targets)](docs/Phase-5-Cyber-Range-Setup.md)
-* 🏢 **Phase 6 & 7:** [Active Directory Forest Deployment](docs/Phase-6-Active-Directory-Deployment.md)
-* 🦠 **Phase 8 & 11:** [Malware Analysis Sandbox & Secure Detonation](docs/Phase-8-Malware-Sandbox.md)
+* 🏢 **Phase 6:** [Active Directory Forest Deployment](docs/Phase-6-Active-Directory-Deployment.md)
+* 🔓 **Phase 7:** [Vulnerability Modeling & Lab Hardening](docs/Phase-7-Vulnerability-Modeling.md)
+* 🦠 **Phase 8:** [Malware Analysis Sandbox & Secure Detonation](docs/Phase-8-Malware-Sandbox.md)
 * 🔎 **Phase 9:** [Digital Forensics & Incident Response (DFIR)](docs/Phase-9-DFIR-Environment.md)
 * 📊 **Phase 10:** [Splunk SIEM Deployment & Telemetry](docs/Phase-10-SIEM-Deployment.md)
 
 ---
 
-# 🛡️ Phase 5: Perimeter Security & Network Segmentation (pfSense)
+## 🗺️ Lab Topology Diagram
 
-## 📌 Objective
-To establish a hardened network perimeter using a **pfSense Virtual Appliance**. This phase ensures that the `AD_LAB` and `CYBER_RANGE` zones are isolated from each other and the internet, with strict egress filtering to prevent unauthorized data exfiltration.
-
-## 🕸️ Network Topology
-The lab is segmented into distinct interfaces to enforce the principle of least privilege:
-
-| Interface | Subnet | Purpose |
-| :--- | :--- | :--- |
-| **WAN** | DHCP (NAT) | External connectivity (Restricted) |
-| **LAN** | `10.0.1.1/24` | Primary management network |
-| **CYBER_RANGE** | `10.0.2.1/24` | Detonation zone for malware analysis |
-| **AD_LAB** | `10.80.80.1/24` | Corporate Forest (`ad.lab`) |
-
-### 🗺️ Lab Topology Diagram
 ```mermaid
 graph TD
     subgraph External_Network
@@ -73,15 +60,14 @@ graph TD
     end
 
     subgraph CYBER_ZONE [CYBER_RANGE - 10.0.2.1/24]
-        DET[Malware Detonation VM]
+        KALI[Kali Linux / Offensive Box]
     end
 
     %% Connectivity Logic
     WAN <--> FW
     FW <--> AD_LAB_Zone
-    FW -.-> |Access Blocked| CYBER_ZONE
+    FW <--> CYBER_ZONE
     FW <--> LAN
-
 
 > **Credit & Inspiration:** This architecture is built based on the "Building a Virtual Security Home Lab" blueprint designed by [David Varghese](https://david-varghese.medium.com/).
 
