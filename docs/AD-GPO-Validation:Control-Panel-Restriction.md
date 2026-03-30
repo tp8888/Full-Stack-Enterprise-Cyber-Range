@@ -1,4 +1,5 @@
 🧪 Active Directory GPO Validation: Control Panel Restriction
+
 📌 Objective
 To validate the Active Directory deployment pipeline by creating, deploying, and verifying a Group Policy Object (GPO) that restricts user access to the Control Panel and Windows Settings across the domain.
 
