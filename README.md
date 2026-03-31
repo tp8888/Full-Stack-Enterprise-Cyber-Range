@@ -53,36 +53,44 @@ The following diagram illustrates the logical separation of the lab zones, all o
 
 ```mermaid
 flowchart TD
+    %% ===== External & Firewall =====
+    WAN["🌐 WAN / Internet"]
+    FW["🛡️ pfSense Firewall"]
 
-subgraph External_Network
-    WAN["WAN - Internet"]
-end
+    %% ===== AD Lab Zone =====
+    DC["🖥️ Windows Server 2019 DC"]
+    W10_1["💻 Win10 Enterprise VM1"]
+    W10_2["💻 Win10 Enterprise VM2"]
 
-subgraph pfSense_Appliance
-    FW["Routing and Filtering"]
-end
+    %% ===== Cyber Range Zone =====
+    KALI["🐧 Kali Linux Offensive Box"]
 
-subgraph AD_Zone
-    DC["Windows Server 2019 DC"]
-    W10_1["Win10 Enterprise VM1"]
-    W10_2["Win10 Enterprise VM2"]
-end
+    %% ===== Malware Sandbox =====
+    DET["☠️ Malware Analysis Sandbox"]
 
-subgraph Cyber_Zone
-    KALI["Kali Linux Offensive Box"]
-end
+    %% ===== Management Zone =====
+    MGMT["🖧 Management Console"]
 
-subgraph Malware_Zone
-    DET["Malware Analysis Sandbox"]
-end
+    %% ===== Connections =====
+    WAN --> FW
+    FW --> DC
+    FW --> W10_1
+    FW --> W10_2
+    FW --> KALI
+    FW --> MGMT
+    FW -.-> DET
 
-subgraph Mgmt_Zone
-    MGMT["Management Console"]
-end
+    %% ===== Styling =====
+    classDef external fill:#d1e7ff,stroke:#339,stroke-width:1px;
+    classDef firewall fill:#ffdb99,stroke:#b58900,stroke-width:2px;
+    classDef adlab fill:#ffe0e0,stroke:#d33,stroke-width:1px;
+    classDef cyber fill:#e0ffe0,stroke:#3a3,stroke-width:1px;
+    classDef malware fill:#f5f5f5,stroke:#999,stroke-width:1px,dasharray: 5 5;
+    classDef mgmt fill:#fff0e0,stroke:#f90,stroke-width:1px;
 
-WAN <--> FW
-FW <--> DC
-FW <--> KALI
-FW <--> MGMT
-FW -.->|Restricted| DET
-```
+    class WAN external;
+    class FW firewall;
+    class DC,W10_1,W10_2 adlab;
+    class KALI cyber;
+    class DET malware;
+    class MGMT mgmt;
