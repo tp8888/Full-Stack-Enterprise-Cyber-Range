@@ -53,54 +53,44 @@ The following diagram illustrates the logical separation of the lab zones, all o
 
 ```mermaid
 flowchart TD
-    %% ===== Internet & Firewall =====
+    %% ===== External & Firewall =====
     WAN["🌐 WAN / Internet"]
     FW["🛡️ pfSense Firewall"]
 
-    %% ===== Red Team / Offensive Zone =====
-    KALI["🐧 Kali Linux Offensive Box"]
-
-    %% ===== AD Lab / Corporate Environment =====
+    %% ===== AD Lab Zone =====
     DC["🖥️ Windows Server 2019 DC"]
     W10_1["💻 Win10 Enterprise VM1"]
     W10_2["💻 Win10 Enterprise VM2"]
 
-    %% ===== Blue Team / Security Zone =====
-    SIEM["📊 Splunk SIEM"]
-    MGMT["🖧 Management Console"]
+    %% ===== Cyber Range Zone =====
+    KALI["🐧 Kali Linux Offensive Box"]
 
-    %% ===== Malware Sandbox / Isolated Zone =====
+    %% ===== Malware Sandbox =====
     DET["☠️ Malware Analysis Sandbox"]
 
-    %% ===== Network Flows =====
+    %% ===== Management Zone =====
+    MGMT["🖧 Management Console"]
+
+    %% ===== Connections =====
     WAN --> FW
-    FW --> KALI
     FW --> DC
     FW --> W10_1
     FW --> W10_2
-    FW --> SIEM
+    FW --> KALI
     FW --> MGMT
     FW -.-> DET
-
-    %% ===== Attack / Monitoring Arrows =====
-    KALI -. Attack --> DC
-    KALI -. Attack --> W10_1
-    DC --> SIEM
-    W10_1 --> SIEM
-    W10_2 --> SIEM
-    DET -. Malware --> SIEM
 
     %% ===== Styling =====
     classDef external fill:#d1e7ff,stroke:#339,stroke-width:1px;
     classDef firewall fill:#ffdb99,stroke:#b58900,stroke-width:2px;
-    classDef redteam fill:#ffe0e0,stroke:#d33,stroke-width:1px;
-    classDef adlab fill:#fff0f5,stroke:#d33,stroke-width:1px;
-    classDef blueteam fill:#e0ffe0,stroke:#3a3,stroke-width:1px;
-    classDef malware fill:#f5f5f5,stroke:#999,stroke-width:1px,dasharray:5 5;
+    classDef adlab fill:#ffe0e0,stroke:#d33,stroke-width:1px;
+    classDef cyber fill:#e0ffe0,stroke:#3a3,stroke-width:1px;
+    classDef malware fill:#f5f5f5,stroke:#999,stroke-width:1px,dasharray: 5 5;
+    classDef mgmt fill:#fff0e0,stroke:#f90,stroke-width:1px;
 
     class WAN external;
     class FW firewall;
-    class KALI redteam;
     class DC,W10_1,W10_2 adlab;
-    class SIEM,MGMT blueteam;
+    class KALI cyber;
     class DET malware;
+    class MGMT mgmt;
