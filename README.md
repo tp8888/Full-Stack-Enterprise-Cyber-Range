@@ -57,40 +57,50 @@ flowchart TD
     WAN["🌐 WAN / Internet"]
     FW["🛡️ pfSense Firewall"]
 
-    %% ===== AD Lab Zone =====
+    %% ===== Red Team / Offensive Zone =====
+    KALI["🐧 Kali Linux Offensive Box"]
+
+    %% ===== AD Lab / Corporate Environment =====
     DC["🖥️ Windows Server 2019 DC"]
     W10_1["💻 Win10 Enterprise VM1"]
     W10_2["💻 Win10 Enterprise VM2"]
 
-    %% ===== Cyber Range Zone =====
-    KALI["🐧 Kali Linux Offensive Box"]
-
-    %% ===== Malware Sandbox =====
-    DET["☠️ Malware Analysis Sandbox"]
-
-    %% ===== Management Zone =====
+    %% ===== Blue Team / Security Zone =====
+    SIEM["📊 Splunk SIEM"]
     MGMT["🖧 Management Console"]
 
-    %% ===== Connections =====
+    %% ===== Malware Sandbox / Isolated Zone =====
+    DET["☠️ Malware Analysis Sandbox"]
+
+    %% ===== Network Flows =====
     WAN --> FW
+    FW --> KALI
     FW --> DC
     FW --> W10_1
     FW --> W10_2
-    FW --> KALI
+    FW --> SIEM
     FW --> MGMT
     FW -.-> DET
+
+    %% ===== Attack / Monitoring Arrows =====
+    KALI -.-> DC
+    KALI -.-> W10_1
+    DC --> SIEM
+    W10_1 --> SIEM
+    W10_2 --> SIEM
+    DET -.-> SIEM
 
     %% ===== Styling =====
     classDef external fill:#d1e7ff,stroke:#339,stroke-width:1px;
     classDef firewall fill:#ffdb99,stroke:#b58900,stroke-width:2px;
-    classDef adlab fill:#ffe0e0,stroke:#d33,stroke-width:1px;
-    classDef cyber fill:#e0ffe0,stroke:#3a3,stroke-width:1px;
-    classDef malware fill:#f5f5f5,stroke:#999,stroke-width:1px,dasharray: 5 5;
-    classDef mgmt fill:#fff0e0,stroke:#f90,stroke-width:1px;
+    classDef redteam fill:#ffe0e0,stroke:#d33,stroke-width:1px;
+    classDef adlab fill:#fff0f5,stroke:#d33,stroke-width:1px;
+    classDef blueteam fill:#e0ffe0,stroke:#3a3,stroke-width:1px;
+    classDef malware fill:#f5f5f5,stroke:#999,stroke-width:1px,dasharray:5 5;
 
     class WAN external;
     class FW firewall;
+    class KALI redteam;
     class DC,W10_1,W10_2 adlab;
-    class KALI cyber;
+    class SIEM,MGMT blueteam;
     class DET malware;
-    class MGMT mgmt;
