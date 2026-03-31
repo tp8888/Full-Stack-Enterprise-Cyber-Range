@@ -54,7 +54,7 @@ The following diagram illustrates the logical separation of the lab zones, all o
 
 ```
 
-mermaid
+```mermaid
 graph TD
     subgraph External_Network
         WAN[WAN / Internet]
