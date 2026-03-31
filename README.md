@@ -28,16 +28,17 @@ To adhere to Zero Trust principles, the network is routed through a central **pf
 ## 📂 Project Documentation & Build Phases
 The deployment of this cyber range is documented in phases. Click on any phase below to view the detailed configuration guides, firewall rulesets, and deployment steps.
 
-* 📝 **Phase 1:** [Network Topology & Hypervisor Setup](docs/Phase-1-Network-Topology.md)
-* 🛡️ **Phase 2:** [pfSense Firewall Installation](docs/Phase-2-pfSense-Setup.md)
-* ⚔️ **Phase 3:** [Offensive Security Zone (Kali Linux)](docs/Phase-3-Kali-Linux-Setup.md)
-* 🧱 **Phase 4:** [Egress Filtering & Network Segmentation](docs/Phase-4-Firewall-Configuration.md)
-* 🎯 **Phase 5:** [Cyber Range Setup (Vulnerable Targets)](docs/Phase-5-Cyber-Range-Setup.md)
-* 🏢 **Phase 6:** [Active Directory Forest Deployment](docs/Phase-6-Active-Directory-Deployment.md)
-* 🔓 **Phase 7:** [Vulnerability Modeling & Lab Hardening](docs/Phase-7-Vulnerability-Modeling.md)
-* 🦠 **Phase 8:** [Malware Analysis Sandbox & Secure Detonation](docs/Phase-8-Malware-Sandbox.md)
-* 🔎 **Phase 9:** [Digital Forensics & Incident Response (DFIR)](docs/Phase-9-DFIR-Environment.md)
-* 📊 **Phase 10:** [Splunk SIEM Deployment & Telemetry](docs/Phase-10-SIEM-Deployment.md)
+* 📝 **Phase 1:** [Network Topology & Hypervisor Setup](docs/Phase-1-Network-Topology/Phase-1-Network-Topology.md)
+* 🛡️ **Phase 2:** [pfSense Firewall Installation](docs/Phase-2-pfSense-Setup/Phase-2-pfSense-Setup.md)
+* ⚔️ **Phase 3:** [Offensive Security Zone (Kali Linux)](docs/Phase-3-Kali-Linux-Setup/Phase-3-Kali-Linux-Setup.md)
+* 🧱 **Phase 4:** [Egress Filtering & Network Segmentation](docs/Phase-4-Firewall-Configuration/Phase-4-Firewall-Configuration.md)
+* 🎯 **Phase 5:** [Cyber Range Setup (Vulnerable Targets)](docs/Phase-5-Cyber-Range-Setup/Phase-5-Cyber-Range-Setup.md)
+* 🏢 **Phase 6:** [Active Directory Forest Deployment](docs/Phase-6-Active-Directory/Phase-6-Active-Directory-Deployment.md)
+  * ↳ *Sub-Task:* [GPO Validation: Control Panel Restriction](docs/Phase-6-Active-Directory/AD-GPO-Validation-Control-Panel.md)
+* 🔓 **Phase 7:** [Vulnerability Modeling & Lab Hardening](docs/Phase-7-Vulnerability-Modeling/Phase-7-Vulnerability-Modeling.md)
+* 🦠 **Phase 8:** [Malware Analysis Sandbox & Secure Detonation](docs/Phase-8-Malware-Sandbox/Phase-8-Malware-Sandbox.md)
+* 🔎 **Phase 9:** [Digital Forensics & Incident Response (DFIR)](docs/Phase-9-DFIR-Environment/Phase-9-DFIR-Environment.md)
+* 📊 **Phase 10:** [Splunk SIEM Deployment & Telemetry](docs/Phase-10-SIEM-Deployment/Phase-10-SIEM-Deployment.md)
 
 ---
 
