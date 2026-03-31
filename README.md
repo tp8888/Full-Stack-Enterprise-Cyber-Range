@@ -53,24 +53,24 @@ The following diagram illustrates the logical separation of the lab zones, all o
 
 ```mermaid
 flowchart TD
-    %% ===== External & Firewall =====
-    WAN["🌐 WAN / Internet"]
-    FW["🛡️ pfSense Firewall"]
-
-    %% ===== Red Team / Offensive Zone =====
+    %% ===== Red Team / Offensive Zone (Top) =====
     KALI["🐧 Kali Linux Offensive Box"]
 
-    %% ===== AD Lab / Corporate Environment =====
+    %% ===== AD Lab / Corporate Environment (Middle) =====
     DC["🖥️ Windows Server 2019 DC"]
     W10_1["💻 Win10 Enterprise VM1"]
     W10_2["💻 Win10 Enterprise VM2"]
 
-    %% ===== Blue Team / Security Zone =====
+    %% ===== Blue Team / Security Zone (Right) =====
     SIEM["📊 Splunk SIEM"]
     MGMT["🖧 Management Console"]
 
-    %% ===== Malware Sandbox / Isolated Zone =====
+    %% ===== Malware Sandbox / Isolated Zone (Bottom) =====
     DET["☠️ Malware Analysis Sandbox"]
+
+    %% ===== Firewall & External =====
+    WAN["🌐 WAN / Internet"]
+    FW["🛡️ pfSense Firewall"]
 
     %% ===== Network Flows =====
     WAN --> FW
@@ -82,7 +82,7 @@ flowchart TD
     FW --> MGMT
     FW -.-> DET
 
-    %% ===== Attack / Monitoring Arrows =====
+    %% ===== Attack / Monitoring Flows =====
     KALI -.-> DC
     KALI -.-> W10_1
     DC --> SIEM
@@ -104,3 +104,10 @@ flowchart TD
     class DC,W10_1,W10_2 adlab;
     class SIEM,MGMT blueteam;
     class DET malware;
+
+    %% ===== Layout Hints (top-down alignment) =====
+    KALI --- DC
+    DC --- SIEM
+    W10_1 --- SIEM
+    W10_2 --- SIEM
+    DET -.-> SIEM
