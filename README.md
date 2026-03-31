@@ -86,3 +86,10 @@ FW <--> AD_Zone
 FW <--> Cyber_Zone
 FW <--> Mgmt_Zone
 FW -.-> |Restricted| Malware_Zone
+
+%% Connectivity
+WAN <--> FW
+FW <--> AD_Zone
+FW <--> Cyber_Zone
+FW <--> Mgmt_Zone
+FW -.-> |Restricted| Malware_Zone
