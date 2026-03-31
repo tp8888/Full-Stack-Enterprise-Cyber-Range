@@ -52,38 +52,9 @@ To establish the foundational hypervisor environment and map out the virtualized
 ## 🗺️ Lab Topology Diagram
 The following diagram illustrates the logical separation of the lab zones, all orchestrated by the pfSense firewall.
 
+# Test Mermaid
+
 ```mermaid
 flowchart TD
-
-subgraph External_Network
-    WAN["WAN - Internet"]
-end
-
-subgraph pfSense_Appliance
-    FW["Routing and Filtering"]
-end
-
-subgraph AD_Zone
-    DC["Windows Server 2019 DC"]
-    W10_1["Win10 Enterprise VM1"]
-    W10_2["Win10 Enterprise VM2"]
-end
-
-subgraph Cyber_Zone
-    KALI["Kali Linux Offensive Box"]
-end
-
-subgraph Malware_Zone
-    DET["Malware Analysis Sandbox"]
-end
-
-subgraph Mgmt_Zone
-    MGMT["Management Console"]
-end
-
-WAN <--> FW
-FW <--> DC
-FW <--> KALI
-FW <--> MGMT
-FW -.->|Restricted| DET
+A --> B
 ```
