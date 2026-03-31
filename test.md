@@ -85,3 +85,4 @@ graph TD
     FW <--> Cyber_Zone
     FW <--> Mgmt_Zone
     FW -.-> |Restricted| Malware_Zone
+```
