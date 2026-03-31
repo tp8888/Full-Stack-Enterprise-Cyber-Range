@@ -53,61 +53,65 @@ The following diagram illustrates the logical separation of the lab zones, all o
 
 ```mermaid
 flowchart TD
-    %% ===== Red Team / Offensive Zone (Top) =====
-    KALI["🐧 Kali Linux Offensive Box"]
+    %% Legend (not rendered in diagram - add separately in README)
+    %% WAN (Red), LAN (Purple), CYBER_RANGE (Gray), AD_LAB (Blue), ISOLATED (Yellow), SECURITY (Orange)
 
-    %% ===== AD Lab / Corporate Environment (Middle) =====
-    DC["🖥️ Windows Server 2019 DC"]
-    W10_1["💻 Win10 Enterprise VM1"]
-    W10_2["💻 Win10 Enterprise VM2"]
+    %% Top: Internet & Router
+    INTERNET("🌐 Internet")
+    ROUTER["🛡️ pfSense Router & Firewall"]
 
-    %% ===== Blue Team / Security Zone (Right) =====
-    SIEM["📊 Splunk SIEM"]
-    MGMT["🖧 Management Console"]
+    %% Host PC and VirtualBox
+    HOST_PC["💻 Host PC (Laptop)"]
+    VBOX["📦 VirtualBox Hypervisor"]
 
-    %% ===== Malware Sandbox / Isolated Zone (Bottom) =====
-    DET["☠️ Malware Analysis Sandbox"]
+    %% VLAN Subnets & Labels
+    WAN_SUBNET["10.0.2.15/24 (WAN)"]
+    CYBER_SUBNET["10.0.0.0/24 (CYBER_RANGE)"]
+    AD_SUBNET["10.80.80.0/24 (AD_LAB)"]
+    ISOLATED_SUBNET["10.99.99.0/24 (ISOLATED)"]
+    SECURITY_SUBNET["10.6.6.0/24 (SECURITY)"]
 
-    %% ===== Firewall & External =====
-    WAN["🌐 WAN / Internet"]
-    FW["🛡️ pfSense Firewall"]
+    %% Devices per VLAN
+    KALI["🐧 Kali Linux\n10.0.0.2"]
+    METASPLOITABLE["🎯 Metasploitable 2\n10.6.6.12"]
+    CHRONOS["⏱️ Chronos 1\n10.6.6.13"]
+    TSURUGI["🔍 Tsurugi Linux\n10.10.10.2"]
+    SPLUNK["📊 Splunk\n10.10.10.13"]
+    WIN_SERVER["🖥️ Win Server 2019\n10.80.80.2"]
+    WIN10_1["💻 Win10 Enterprise\n10.80.80.11"]
+    WIN10_2["💻 Win10 Enterprise\n10.80.80.12"]
+    FLARE_VM["☠️ Flare VM\n10.99.99.11"]
+    REMNUX["🐧 REMnux\n10.99.99.12"]
 
-    %% ===== Network Flows =====
-    WAN --> FW
-    FW --> KALI
-    FW --> DC
-    FW --> W10_1
-    FW --> W10_2
-    FW --> SIEM
-    FW --> MGMT
-    FW -.-> DET
+    %% Connections (Top-Down)
+    INTERNET --> ROUTER
+    ROUTER --> WAN_SUBNET
+    ROUTER --> CYBER_SUBNET
+    ROUTER --> AD_SUBNET
+    ROUTER --> ISOLATED_SUBNET
+    ROUTER --> SECURITY_SUBNET
 
-    %% ===== Attack / Monitoring Flows =====
-    KALI -.-> DC
-    KALI -.-> W10_1
-    DC --> SIEM
-    W10_1 --> SIEM
-    W10_2 --> SIEM
-    DET -.-> SIEM
+    WAN_SUBNET --> KALI
+    SECURITY_SUBNET --> METASPLOITABLE
+    SECURITY_SUBNET --> CHRONOS
+    CYBER_SUBNET --> TSURUGI
+    CYBER_SUBNET --> SPLUNK
+    AD_SUBNET --> WIN_SERVER
+    AD_SUBNET --> WIN10_1
+    AD_SUBNET --> WIN10_2
+    ISOLATED_SUBNET --> FLARE_VM
+    ISOLATED_SUBNET --> REMNUX
 
-    %% ===== Styling =====
-    classDef external fill:#d1e7ff,stroke:#339,stroke-width:1px;
-    classDef firewall fill:#ffdb99,stroke:#b58900,stroke-width:2px;
-    classDef redteam fill:#ffe0e0,stroke:#d33,stroke-width:1px;
-    classDef adlab fill:#fff0f5,stroke:#d33,stroke-width:1px;
-    classDef blueteam fill:#e0ffe0,stroke:#3a3,stroke-width:1px;
-    classDef malware fill:#f5f5f5,stroke:#999,stroke-width:1px,dasharray:5 5;
+    %% Styling by subnet
+    classDef wan fill:#ffd6d6,stroke:#d33,stroke-width:1px;
+    classDef security fill:#fff0d6,stroke:#d98f00,stroke-width:1px;
+    classDef cyber fill:#e6e6e6,stroke:#666,stroke-width:1px;
+    classDef adlab fill:#d6eaff,stroke:#3399ff,stroke-width:1px;
+    classDef isolated fill:#fff8d6,stroke:#ccbb33,stroke-width:1px;
 
-    class WAN external;
-    class FW firewall;
-    class KALI redteam;
-    class DC,W10_1,W10_2 adlab;
-    class SIEM,MGMT blueteam;
-    class DET malware;
-
-    %% ===== Layout Hints (top-down alignment) =====
-    KALI --- DC
-    DC --- SIEM
-    W10_1 --- SIEM
-    W10_2 --- SIEM
-    DET -.-> SIEM
+    class WAN_SUBNET wan;
+    class WAN_SUBNET wan;
+    class CYBER_SUBNET cyber;
+    class AD_SUBNET adlab;
+    class ISOLATED_SUBNET isolated;
+    class SECURITY_SUBNET security;
