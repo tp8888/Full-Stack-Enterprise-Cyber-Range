@@ -80,3 +80,10 @@ end
 subgraph Mgmt_Zone
     MGMT["Management Console"]
 end
+
+WAN <--> FW
+FW <--> DC
+FW <--> KALI
+FW <--> MGMT
+FW -.->|Restricted| DET
+```
