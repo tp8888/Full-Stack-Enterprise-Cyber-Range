@@ -51,8 +51,9 @@ To establish the foundational hypervisor environment and map out the virtualized
 
 ## 🗺️ Lab Topology Diagram
 The following diagram illustrates the logical separation of the lab zones, all orchestrated by the pfSense firewall.
+
 ```mermaid
-flowchart TD
+graph TD
     subgraph External_Network
         WAN[WAN / Internet]
     end
@@ -79,6 +80,13 @@ flowchart TD
         MGMT[Management Console]
     end
 
+    %% Connectivity
+    WAN <--> FW
+    FW <--> AD_Zone
+    FW <--> Cyber_Zone
+    FW <--> Mgmt_Zone
+    FW -.-> |Restricted| Malware_Zone
+```
     %% Connectivity
     WAN <--> FW
     FW <--> AD_Zone
