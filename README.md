@@ -54,7 +54,7 @@ The following diagram illustrates the logical separation of the lab zones, all o
 
 
 ```mermaid
-graph TD
+flowchart TD
     subgraph External_Network
         WAN[WAN / Internet]
     end
@@ -86,5 +86,5 @@ graph TD
     FW <--> AD_Zone
     FW <--> Cyber_Zone
     FW <--> Mgmt_Zone
-    FW -.-> |Restricted| Malware_Zone
+    FW -. Restricted .-> Malware_Zone
 ```
